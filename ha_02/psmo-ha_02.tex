@@ -1,0 +1,186 @@
+% arara: xelatex
+\documentclass[12pt]{article}
+
+\usepackage{physics}
+
+
+\usepackage{tikz} % картинки в tikz
+\usepackage{microtype} % свешивание пунктуации
+
+\usepackage{array} % для столбцов фиксированной ширины
+
+\usepackage{indentfirst} % отступ в первом параграфе
+
+\usepackage{sectsty} % для центрирования названий частей
+\allsectionsfont{\centering}
+
+\usepackage{amsmath, amsfonts, amssymb} % куча стандартных математических плюшек
+
+\usepackage{comment}
+
+\usepackage[top=2cm, left=1.2cm, right=1.2cm, bottom=2cm]{geometry} % размер текста на странице
+
+\usepackage{lastpage} % чтобы узнать номер последней страницы
+
+\usepackage{enumitem} % дополнительные плюшки для списков
+%  например \begin{enumerate}[resume] позволяет продолжить нумерацию в новом списке
+\usepackage{caption}
+
+\usepackage{url} % to use \url{link to web}
+
+\usepackage{fancyhdr} % весёлые колонтитулы
+\pagestyle{fancy}
+\lhead{ПСМО}
+\chead{}
+\rhead{Домяшка-02, 2022-12-04, 21:00}
+\lfoot{2022-2023}
+\cfoot{}
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\usepackage{tcolorbox} % рамочки!
+
+\usepackage{todonotes} % для вставки в документ заметок о том, что осталось сделать
+% \todo{Здесь надо коэффициенты исправить}
+% \missingfigure{Здесь будет Последний день Помпеи}
+% \listoftodos - печатает все поставленные \todo'шки
+
+
+% более красивые таблицы
+\usepackage{booktabs}
+% заповеди из докупентации:
+% 1. Не используйте вертикальные линни
+% 2. Не используйте двойные линии
+% 3. Единицы измерения - в шапку таблицы
+% 4. Не сокращайте .1 вместо 0.1
+% 5. Повторяющееся значение повторяйте, а не говорите "то же"
+
+
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\setmainlanguage{russian}
+\setotherlanguages{english}
+
+% download "Linux Libertine" fonts:
+% http://www.linuxlibertine.org/index.php?id=91&L=1
+\setmainfont{Linux Libertine O} % or Helvetica, Arial, Cambria
+% why do we need \newfontfamily:
+% http://tex.stackexchange.com/questions/91507/
+\newfontfamily{\cyrillicfonttt}{Linux Libertine O}
+
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ} % для списков с русскими буквами
+\setlist[enumerate, 2]{label=\asbuk*),ref=\asbuk*}
+
+%% эконометрические сокращения
+\DeclareMathOperator{\Cov}{\mathbb{C}ov}
+\DeclareMathOperator{\Corr}{\mathbb{C}orr}
+\DeclareMathOperator{\Var}{\mathbb{V}ar}
+
+\let\P\relax
+\DeclareMathOperator{\P}{\mathbb{P}}
+
+\DeclareMathOperator{\E}{\mathbb{E}}
+% \DeclareMathOperator{\tr}{trace}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator{\pCorr}{\mathrm{p}\mathbb{C}\mathrm{orr}}
+
+
+\newcommand \hb{\hat{\beta}}
+\newcommand \hs{\hat{\sigma}}
+\newcommand \htheta{\hat{\theta}}
+\newcommand \s{\sigma}
+\newcommand \hy{\hat{y}}
+\newcommand \hY{\hat{Y}}
+\newcommand \e{\varepsilon}
+\newcommand \he{\hat{\e}}
+\newcommand \z{z}
+\newcommand \hVar{\widehat{\Var}}
+\newcommand \hCorr{\widehat{\Corr}}
+\newcommand \hCov{\widehat{\Cov}}
+\newcommand \cN{\mathcal{N}}
+\newcommand \RR{\mathbb{R}}
+\newcommand \NN{\mathbb{N}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cH}{\mathcal{H}}
+
+
+\begin{document}
+
+
+Дедлайн: 2022-12-04, \textbf{21:00}.
+
+
+\begin{enumerate}
+
+\item Рассмотрим наивный бутстрэп для исходной выборки из $n$ наблюдений непрерывного распределения. 
+Обозначим исходные наблюдения с помощью $y_i$, а бутстрэпированные — с помощью $y_i^*$.
+
+\begin{enumerate}
+    \item Какова вероятность того, что пятое исходное наблюдение ровно три раза попадет в бутстрэп выборку?        
+    \item Чему равен предел найденной вероятности при $n\to \infty$?
+    \item Чему равен предел вероятности $\P(\max y_i > \max y_i^*)$ при $n\to \infty$?
+\end{enumerate}
+
+
+
+
+\item Величины $y_i$ независимы $\cN(\mu;1)$. 
+\begin{enumerate}
+    \item Без компьютера явно найдите оценку $\mu$  методом максимального правдоподобия,
+    если а-приори известно, что $\mu \geq 42$.
+    
+\end{enumerate}
+Винни-Пух использует наивный бутстрэп для построения 95\%-го  интервала для $\mu$. 
+\begin{enumerate}[resume]
+    \item С помощью симуляций оцените фактическую вероятность накрытия, если истинное $\mu = 42$.
+    \item С помощью симуляций оцените фактическую вероятность накрытия, если истинное $\mu = 44$.
+\end{enumerate}
+
+
+\item Величины $y_i$ независимы $\cN(0;1)$. 
+Кролик не знает истинное ожидание, и для надежности использует \text{очень хитрый} способ оценки $\mu$. 
+В качестве $\hat \mu$ Кролик выбирает середину самого короткого отрезка, содержащего 50\% выборки. 
+Для построения 95\%-го интервала для $\mu$ Кролик использует наивный бутстрэп. 
+
+С помощью симуляций оцените фактическую вероятность накрытия.
+
+
+\end{enumerate}
+
+
+
+Следующие вопросы относятся к набору данных \url{xxx}. 
+Если вычислительные возможности позволяют, берите $n_{boot}=10000$ бутстрэп-выборок. 
+Если нет, то сокращайте в соответствии с вычислительными возможностями. 
+
+\begin{enumerate}[resume]
+    \item Рассмотрим модель линейной регрессии 
+    \[
+    \hat y_i = \hat \beta_1 + \hat\beta_2 x_i + \hat\beta_3 x_i^2.
+    \]
+    \begin{enumerate}
+    \item С помощью наивного бутстрэпа постройте 95\%-й доверительный интервал для каждого коэффициента.
+    \item С помощью наивного бутстрэпа постройте 95\%-й доверительный интервал для вершины параболы. 
+    \end{enumerate}
+\item Рассмотрим модель квантильной регрессии для квантилей $q=0.1$, $q=0.5$, $q=0.9$:
+    \[
+    \hat y_i = \hat \beta_1 + \hat\beta_2 x_i + \hat\beta_3 x_i^2.
+    \]
+    \begin{enumerate}
+    \item Постройте три полученные линии регрессии на одном графике с данными. 
+    \item Для медианной регрессии с помощью наивного бутстрэпа постройте 95\%-й доверительный интервал для каждого коэффициента.
+    \item Для медианной регрессии с помощью наивного бутстрэпа постройте 95\%-й доверительный интервал для вершины параболы. 
+    \end{enumerate}
+\item Постройте 95\%-й доверительный интервал для медианы величины $y$, используя наивный бутстрэп, бутстрэп $t$-статистики и BCA-бутстрэп. 
+
+
+\end{enumerate}
+
+
+
+
+\end{document}
