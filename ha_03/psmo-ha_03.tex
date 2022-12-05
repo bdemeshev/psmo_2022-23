@@ -172,9 +172,10 @@ $\hat r_i = \hat\gamma_1 +\hat\gamma_w w_i$ и также использует
 
 \item Рассмотрим модель логистической регрессии для набора данных 
 \[
-\Lambda(\P(admit_i = |X)) = \beta_1 + \beta_2 gre_i + \beta_3 gpa_i + \beta_4 rank_i    
+\Lambda(\P(admit_i = 1 |X)) = \beta_1 + \beta_2 gre_i + \beta_3 gpa_i + \beta_4 rank_i    
 \]
-для набора данных \url{https://stats.idre.ucla.edu/stat/data/binary.csv}.
+для набора данных \url{https://stats.idre.ucla.edu/stat/data/binary.csv},
+где $\Lambda()$ — логистическая функция.
 Переменная $admit_i$ равна 1 для попавших на обучение, $gre_i$ — результат GRE экзамена,
 $gpa_i$ — средний балл, $rank_i$ — рейтинг студента. 
 
