@@ -1,0 +1,197 @@
+% arara: xelatex
+\documentclass[12pt]{article}
+
+\usepackage{physics}
+
+
+\usepackage{tikz} % картинки в tikz
+\usepackage{microtype} % свешивание пунктуации
+
+\usepackage{array} % для столбцов фиксированной ширины
+
+\usepackage{indentfirst} % отступ в первом параграфе
+
+\usepackage{sectsty} % для центрирования названий частей
+\allsectionsfont{\centering}
+
+\usepackage{amsmath, amsfonts, amssymb} % куча стандартных математических плюшек
+
+\usepackage{comment}
+
+\usepackage[top=2cm, left=1.2cm, right=1.2cm, bottom=2cm]{geometry} % размер текста на странице
+
+\usepackage{lastpage} % чтобы узнать номер последней страницы
+
+\usepackage{enumitem} % дополнительные плюшки для списков
+%  например \begin{enumerate}[resume] позволяет продолжить нумерацию в новом списке
+\usepackage{caption}
+
+\usepackage{url} % to use \url{link to web}
+
+\usepackage{fancyhdr} % весёлые колонтитулы
+\pagestyle{fancy}
+\lhead{ПСМО, осень-зима 2022}
+\chead{}
+\rhead{Домяшка-03}
+\lfoot{}
+\cfoot{}
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\usepackage{tcolorbox} % рамочки!
+
+\usepackage{todonotes} % для вставки в документ заметок о том, что осталось сделать
+% \todo{Здесь надо коэффициенты исправить}
+% \missingfigure{Здесь будет Последний день Помпеи}
+% \listoftodos - печатает все поставленные \todo'шки
+
+
+% более красивые таблицы
+\usepackage{booktabs}
+% заповеди из докупентации:
+% 1. Не используйте вертикальные линни
+% 2. Не используйте двойные линии
+% 3. Единицы измерения - в шапку таблицы
+% 4. Не сокращайте .1 вместо 0.1
+% 5. Повторяющееся значение повторяйте, а не говорите "то же"
+
+
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\setmainlanguage{russian}
+\setotherlanguages{english}
+
+% download "Linux Libertine" fonts:
+% http://www.linuxlibertine.org/index.php?id=91&L=1
+\setmainfont{Linux Libertine O} % or Helvetica, Arial, Cambria
+% why do we need \newfontfamily:
+% http://tex.stackexchange.com/questions/91507/
+\newfontfamily{\cyrillicfonttt}{Linux Libertine O}
+
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ} % для списков с русскими буквами
+\setlist[enumerate, 2]{label=\asbuk*),ref=\asbuk*}
+
+%% эконометрические сокращения
+\DeclareMathOperator{\Cov}{\mathbb{C}ov}
+\DeclareMathOperator{\Corr}{\mathbb{C}orr}
+\DeclareMathOperator{\Var}{\mathbb{V}ar}
+
+\let\P\relax
+\DeclareMathOperator{\P}{\mathbb{P}}
+
+\DeclareMathOperator{\E}{\mathbb{E}}
+% \DeclareMathOperator{\tr}{trace}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator{\pCorr}{\mathrm{p}\mathbb{C}\mathrm{orr}}
+
+
+\newcommand \hb{\hat{\beta}}
+\newcommand \hs{\hat{\sigma}}
+\newcommand \htheta{\hat{\theta}}
+\newcommand \s{\sigma}
+\newcommand \hy{\hat{y}}
+\newcommand \hY{\hat{Y}}
+\newcommand \e{\varepsilon}
+\newcommand \he{\hat{\e}}
+\newcommand \z{z}
+\newcommand \hVar{\widehat{\Var}}
+\newcommand \hCorr{\widehat{\Corr}}
+\newcommand \hCov{\widehat{\Cov}}
+\newcommand \cN{\mathcal{N}}
+\newcommand \RR{\mathbb{R}}
+\newcommand \NN{\mathbb{N}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cH}{\mathcal{H}}
+
+
+\begin{document}
+
+
+\begin{enumerate}
+
+\item Винни-Пух поделил выборку на обучающую и тестовую, $(y, X)$ и $(y_B, X_B)$. 
+Предположим, что все наблюдения независимы, одна и та же зависимость выполнена
+на обучающей и тестовой выборке $y=X\beta + u$, $y_B = X_B\beta + u_B$.
+Кроме того, что $\E(u|X, X_B) = \E(u_B|X, X_B) = 0$, совместный закон распределения предикторов и ошибки 
+одинаков для тестовой и обучающей выборке, в частности, $\Var(u_i | x_i) = h(x_i)$, 
+$\Var(u_i^B | x_i^B) = h(x_i^B)$.
+
+Для краткости обозначим $H = X(X^TX)^{-1}X^T$, оценки коэффициентов по обучающей выборке, $\hat\beta$, 
+прогнозы на обучающую и тестовую выборку, $\hat y = X\hat \beta$, $\hat y_B = X_B\hat \beta$,
+ошибки прогнозов, $\hat u = y - \hat y$, $\hat u_B = y_B - \hat y_B$.
+
+Найдите ковариационные матрицы $\Var(\hat y |X, X_B)$, $\Cov(\hat y_B, \hat u_B | X, X_B)$.
+
+
+
+\item Рассмотрим регрессию с $L^2$-регуляризацией, где штраф накладывается на все коэффициенты,
+кроме первого, который соответствует первому столбцу из единиц в матрице $X$ размера $[n\times k]$. 
+Целевая функция имеет вид:
+\[
+Q(\hat \beta) = (y - X\hat\beta)^T (y - X\hat\beta) + \lambda \sum_{j=2}^k \hat\beta_j^2. 
+\]
+
+Какие наблюдения надо добавить в обычную регрессию, чтобы результат обычной регрессии 
+идеально совпал с регрессией с данной регуляризацией? Можно ли обойтись добавлением одного наблюдения?
+
+\item Винни-Пух и Кролик пытаются оценить эффект воздействия бинарной переменной $w_i \in \{0, 1\}$
+на целевую переменную $y_i$.
+
+Винни-Пух использует множественную регрессию $\hat y_i = \hat\beta_1 + \hat\beta_w w_i + \hat \beta_x x_i$,
+классическую стандартную ошибку $se_{\text{class}}(\hat\beta_w)$ для построения доверительного интервала. 
+
+Кролик использует CUPED в следующей вариации. На первом шаге строит ровно ту же регрессию, что и Винни-Пух,
+получает почти-остатки $r_i =y_i - \hat\beta_x x_i$. На втором шаге оценивает парную регрессию 
+$\hat r_i = \hat\gamma_1 +\hat\gamma_w w_i$ и также использует 
+классическую стандартную ошибку $se_{\text{class}}(\hat\gamma_w)$ для построения доверительного интервала. 
+
+\begin{enumerate}
+    \item Верно ли, что совпадают точечные оценки эффекта воздействия $\hat\beta_w$ и $\hat\gamma_w$?
+    \item Во сколько раз отличаются классические стандартные ошибки $\hat\beta_w$ и $\hat\gamma_w$?
+\end{enumerate}
+
+
+\newpage
+\item Рассмотрим модель линейной регрессии 
+    \[
+    \hat y_i = \hat \beta_1 + \hat\beta_2 x_i + \hat\beta_3 x_i^2
+    \]
+    для набора данных \url{https://github.com/bdemeshev/psmo_2022-23/raw/main/ha_02/psmo-ha_02.csv}.
+    \begin{enumerate}
+    \item Найдите классическую и $HC3$-оценку ковариационной матрицы коэффициентов. 
+    \item Постройте классический и $HC3$-робастный доверительный интервал для $\hat \beta_2$.
+    \item Используя $HC3$-оценку ковариационной матрицы и предполагая, 
+    что оценки коэффициентов имеют распределение, похожее на многомерное нормальное,
+    постройте с помощью генератора случайных чисел из нормального распределения
+    95\%-й доверительный интервал для вершины параболы. 
+    \end{enumerate}
+
+\item Рассмотрим модель логистической регрессии для набора данных 
+\[
+\Lambda(\P(admit_i = |X)) = \beta_1 + \beta_2 gre_i + \beta_3 gpa_i + \beta_4 rank_i    
+\]
+для набора данных \url{https://stats.idre.ucla.edu/stat/data/binary.csv}.
+Переменная $admit_i$ равна 1 для попавших на обучение, $gre_i$ — результат GRE экзамена,
+$gpa_i$ — средний балл, $rank_i$ — рейтинг студента. 
+
+\begin{enumerate}
+    \item Найдите оценку ковариационной матрицы коэффициентов. 
+    \item Постройте 95\%-й доверительный интервал для коэффициента при $gpa$. 
+    \item Постройте точечную и 95\%-ю интервальную оценку предельного эффекта 
+    $\partial \P(y_i = 1\mid X)/\partial gpa_i$ для медианных значений предикторов.
+    \item С помощью подходящего статистического теста сделайте выбор между 
+    предложенной моделью и моделью, в которой переменная $rank$ считается категориальной, 
+    то есть вводится дополнительная бинарная переменная индикатор для каждого значения $rank$ кроме базового. 
+\end{enumerate}
+
+
+\end{enumerate}
+
+
+
+
+\end{document}
